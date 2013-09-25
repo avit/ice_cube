@@ -32,8 +32,8 @@ module IceCube
         offset >= 0 ? offset : offset + days_in_year
       end
 
-      def build_s(builder)
-        builder.piece(:day_of_year) << StringBuilder.nice_number(day)
+      def accept(builder)
+        builder.add_day_of_year(self)
       end
 
       def build_hash(builder)
@@ -42,12 +42,6 @@ module IceCube
 
       def build_ical(builder)
         builder['BYYEARDAY'] << day
-      end
-
-      StringBuilder.register_formatter(:day_of_year) do |entries|
-        str = "on the #{StringBuilder.sentence(entries)} "
-        str << (entries.size == 1 ? 'day of the year' : 'days of the year')
-        str
       end
 
     end

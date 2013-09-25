@@ -104,11 +104,27 @@ module IceCube
 
     # Get the recurrence times that are on the schedule
     def recurrence_times
-      @all_recurrence_rules.select { |r| r.is_a?(SingleOccurrenceRule) }.map(&:time)
+      @all_recurrence_rules.each_with_object([]) do |r, times|
+        times << r.time if r.is_a?(SingleOccurrenceRule)
+      end
     end
     alias :rtimes :recurrence_times
     deprecated_alias :rdates, :rtimes
     deprecated_alias :recurrence_dates, :recurrence_times
+
+    # Get the recurrence times excluding the start time
+    def recurrence_times_without_start_time
+      recurrence_times.reject { |t| t == start_time }
+    end
+
+    # Get the recurrence times including the start time
+    def recurrence_times_with_start_time
+      if recurrence_rules.empty?
+        [start_time].concat recurrence_times_without_start_time
+      else
+        recurrence_times
+      end
+    end
 
     # Remove a recurrence time
     def remove_recurrence_time(time)
@@ -288,15 +304,13 @@ module IceCube
       n.nil? ? occurrences.last : occurrences[-n..-1]
     end
 
+    def accept(builder)
+      builder.add_schedule(self)
+    end
+
     # String serialization
     def to_s
-      pieces = []
-      rd = recurrence_times_with_start_time - extimes
-      pieces.concat rd.sort.map { |t| t.strftime(IceCube.to_s_time_format) }
-      pieces.concat rrules.map  { |t| t.to_s }
-      pieces.concat exrules.map { |t| "not #{t.to_s}" }
-      pieces.concat extimes.sort.map { |t| "not on #{t.strftime(IceCube.to_s_time_format)}" }
-      pieces.join(' / ')
+      StringBuilder.new(self).to_s
     end
 
     # Serialize this schedule to_ical
@@ -456,18 +470,6 @@ module IceCube
 
     def implicit_start_occurrence_rule
       SingleOccurrenceRule.new(start_time)
-    end
-
-    def recurrence_times_without_start_time
-      recurrence_times.reject { |t| t == start_time }
-    end
-
-    def recurrence_times_with_start_time
-      if recurrence_rules.empty?
-        [start_time].concat recurrence_times_without_start_time
-      else
-        recurrence_times
-      end
     end
 
     def recurrence_rules_with_implicit_start_occurrence

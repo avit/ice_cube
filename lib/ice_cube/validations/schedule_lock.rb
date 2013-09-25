@@ -30,7 +30,7 @@ module IceCube
       end
 
       # no -op
-      def build_s(builder)
+      def accept(builder)
       end
 
       # no -op

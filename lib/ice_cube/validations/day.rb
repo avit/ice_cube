@@ -31,8 +31,8 @@ module IceCube
         :wday
       end
 
-      def build_s(builder)
-        builder.piece(:day) << day
+      def accept(builder)
+        builder.add_day(self)
       end
 
       def build_hash(builder)
@@ -44,20 +44,6 @@ module IceCube
         # Only add if there aren't others from day_of_week that override
         if builder['BYDAY'].none? { |b| b.end_with?(ical_day) }
           builder['BYDAY'] << ical_day
-        end
-      end
-
-      StringBuilder.register_formatter(:day) do |validation_days|
-        # sort the days
-        validation_days.sort!
-        # pick the right shortening, if applicable
-        if validation_days == [0, 6]
-          'on Weekends'
-        elsif validation_days == (1..5).to_a
-          'on Weekdays'
-        else
-          segments = validation_days.map { |d| "#{Date::DAYNAMES[d]}s" }
-          "on #{StringBuilder.sentence(segments)}"
         end
       end
 

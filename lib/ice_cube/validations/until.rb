@@ -33,8 +33,8 @@ module IceCube
         raise UntilExceeded if step_time > time
       end
 
-      def build_s(builder)
-        builder.piece(:until) << "until #{time.strftime(IceCube.to_s_time_format)}"
+      def accept(builder)
+        builder.add_until(self)
       end
 
       def build_hash(builder)

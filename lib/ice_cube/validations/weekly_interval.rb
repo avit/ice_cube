@@ -39,8 +39,8 @@ module IceCube
         (interval - offset) * 7 if offset
       end
 
-      def build_s(builder)
-        builder.base = interval == 1 ? 'Weekly' : "Every #{interval} weeks"
+      def accept(builder)
+        builder.add_weekly_interval(self)
       end
 
       def build_hash(builder)

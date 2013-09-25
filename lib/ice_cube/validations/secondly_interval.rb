@@ -31,8 +31,8 @@ module IceCube
         interval - offset if offset
       end
 
-      def build_s(builder)
-        builder.base = interval == 1 ? 'Secondly' : "Every #{interval} seconds"
+      def accept(builder)
+        builder.add_secondly_interval(self)
       end
 
       def build_hash(builder)

@@ -28,8 +28,8 @@ module IceCube
         :sec
       end
 
-      def build_s(builder)
-        builder.piece(:second_of_minute) << StringBuilder.nice_number(second)
+      def accept(builder)
+        builder.add_second_of_minute(self)
       end
 
       def build_hash(builder)
@@ -38,11 +38,6 @@ module IceCube
 
       def build_ical(builder)
         builder['BYSECOND'] << second
-      end
-
-      StringBuilder.register_formatter(:second_of_minute) do |segments|
-        str = "on the #{StringBuilder.sentence(segments)} "
-        str << (segments.size == 1 ? 'second of the minute' : 'seconds of the minute')
       end
 
     end

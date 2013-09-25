@@ -46,14 +46,16 @@ module IceCube
       @time
     end
 
-    def to_s
-      builder = StringBuilder.new
-      @validations.each do |name, validations|
-        validations.each do |validation|
-          validation.build_s(builder)
+    def accept(builder)
+      @validations.each do |name, type_validations|
+        type_validations.each do |validation|
+          validation.accept(builder)
         end
       end
-      builder.to_s
+    end
+
+    def to_s
+      StringBuilder.new(self).to_s
     end
 
     def to_hash

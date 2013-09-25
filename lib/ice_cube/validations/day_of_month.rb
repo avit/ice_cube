@@ -28,8 +28,8 @@ module IceCube
         :day
       end
 
-      def build_s(builder)
-        builder.piece(:day_of_month) << StringBuilder.nice_number(day)
+      def accept(builder)
+        builder.add_day_of_month(self)
       end
 
       def build_hash(builder)
@@ -38,12 +38,6 @@ module IceCube
 
       def build_ical(builder)
         builder['BYMONTHDAY'] << day
-      end
-
-      StringBuilder.register_formatter(:day_of_month) do |entries|
-        str = "on the #{StringBuilder.sentence(entries)} "
-        str << (entries.size == 1 ? 'day of the month' : 'days of the month')
-        str
       end
 
     end

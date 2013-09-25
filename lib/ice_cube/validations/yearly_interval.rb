@@ -26,8 +26,8 @@ module IceCube
         interval - offset if offset
       end
 
-      def build_s(builder)
-        builder.base = interval == 1 ? 'Yearly' : "Every #{interval} years"
+      def accept(builder)
+        builder.add_yearly_interval(self)
       end
 
       def build_hash(builder)

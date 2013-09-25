@@ -29,8 +29,8 @@ module IceCube
         :month
       end
 
-      def build_s(builder)
-        builder.piece(:month_of_year) << Date::MONTHNAMES[month]
+      def accept(builder)
+        builder.add_month_of_year(self)
       end
 
       def build_hash(builder)
@@ -39,10 +39,6 @@ module IceCube
 
       def build_ical(builder)
         builder['BYMONTH'] << month
-      end
-
-      StringBuilder.register_formatter(:month_of_year) do |segments|
-        "in #{StringBuilder.sentence(segments)}"
       end
 
     end

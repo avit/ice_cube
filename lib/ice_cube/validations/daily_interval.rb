@@ -30,8 +30,8 @@ module IceCube
         interval - offset if offset
       end
 
-      def build_s(builder)
-        builder.base = interval == 1 ? 'Daily' : "Every #{interval} days"
+      def accept(builder)
+        builder.add_daily_interval(self)
       end
 
       def build_hash(builder)

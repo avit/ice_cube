@@ -33,8 +33,8 @@ module IceCube
         raise CountExceeded if rule.uses && rule.uses >= count
       end
 
-      def build_s(builder)
-        builder.piece(:count) << count
+      def accept(builder)
+        builder.add_count(self)
       end
 
       def build_hash(builder)
@@ -43,11 +43,6 @@ module IceCube
 
       def build_ical(builder)
         builder['COUNT'] << count
-      end
-
-      StringBuilder.register_formatter(:count) do |segments|
-        count = segments.first
-        "#{count} #{count == 1 ? 'time' : 'times'}"
       end
 
     end
