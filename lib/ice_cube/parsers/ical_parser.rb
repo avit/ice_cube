@@ -1,5 +1,14 @@
 module IceCube
   class IcalParser
+
+    YYYYMMDD_VALUE = %r(
+      ^               # start of string
+      (?<yyyy>\d{4})  # 4 digits captured into local `yyyy`
+      (?<mm>  \d{2})  # 2 digits captured into local `mm`
+      (?<dd>  \d{2})  # 2 digits captured into local `dd`
+      $               # end of string
+    )x
+
     def self.schedule_from_ical(ical_string, options = {})
       data = {}
       ical_string.each_line do |line|
@@ -41,7 +50,11 @@ module IceCube
         when 'COUNT'
           params[:count] = value.to_i
         when 'UNTIL'
-          params[:until] = Time.parse(value).utc
+          if value =~ YYYYMMDD_VALUE
+            params[:until] = Time.utc(yyyy, mm, dd)
+          else
+            params[:until] = Time.parse(value).utc
+          end
         when 'WKST'
           params[:week_start] = TimeUtil.ical_day_to_symbol(value)
         when 'BYSECOND'
