@@ -3,7 +3,7 @@ require 'ice_cube/null_i18n'
 module IceCube
   module I18n
 
-    LOCALES_PATH = File.expand_path(File.join('..', '..', '..', 'config', 'locales'), __FILE__)
+    LOCALES_PATH = File.expand_path(File.join('..', '..', '..', 'locales'), __FILE__)
 
     def self.t(*args)
       backend.t(*args)
@@ -18,7 +18,7 @@ module IceCube
     end
 
     def self.detect_backend!
-      ::I18n.load_path += Dir[File.join(LOCALES_PATH, '*.yml')]
+      ::I18n.load_path += Dir[File.join(LOCALES_PATH, 'ice_cube', '*.yml')]
       ::I18n
     rescue NameError
       NullI18n
