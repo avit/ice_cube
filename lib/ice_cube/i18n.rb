@@ -21,6 +21,7 @@ module IceCube
       ::I18n.load_path += Dir[File.join(LOCALES_PATH, 'ice_cube', '*.yml')]
       ::I18n
     rescue NameError
+      ::I18n.load_path += Dir[File.join(LOCALES_PATH, 'rails_i18n/*.yml')]
       NullI18n
     end
   end

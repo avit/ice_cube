@@ -24,7 +24,7 @@ module IceCube
 
     def self.l(date_or_time, options = {})
       return date_or_time.strftime(options[:format]) if options[:format]
-      date_or_time.strftime(t('ice_cube.date.formats.default'))
+      date_or_time.strftime(t('date.formats.default'))
     end
 
     def self.config
@@ -32,8 +32,11 @@ module IceCube
     end
 
     def self.read_config(lang)
-      path = File.join(IceCube::I18n::LOCALES_PATH, 'ice_cube', "#{lang}.yml")
-      YAML.load_file(path)[lang]
+      parts = ['rails_i18n', 'ice_cube'].map do |gem|
+        path = File.join(IceCube::I18n::LOCALES_PATH, gem, "#{lang}.yml")
+        YAML.load_file(path)[lang]
+      end
+      parts.reduce(:merge!)
     end
   end
 end

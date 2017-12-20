@@ -3,31 +3,6 @@ sv:
     pieces_connector: ' / '
     not: 'inte %{target}'
     not_on: 'inte i %{target}'
-    date:
-      formats:
-        default: '%-d %B %Y'
-      month_names:
-      -
-      - januari
-      - februari
-      - mars
-      - april
-      - maj
-      - juni
-      - juli
-      - augusti
-      - september
-      - oktober
-      - november
-      - december
-      day_names:
-      - söndag
-      - måndag
-      - tisdag
-      - onsdag
-      - torsdag
-      - fredag
-      - lördag
     times:
       other: '%{count} gånger'
       one: '%{count} gång'
@@ -105,65 +80,3 @@ sv:
         until: '%{rest} %{current}'
         count: '%{rest} %{current}'
         default: '%{rest} %{current}'
-
-  date:
-    abbr_day_names:
-    - Sön
-    - Mån
-    - Tis
-    - Ons
-    - Tor
-    - Fre
-    - Lör
-    abbr_month_names:
-    -
-    - Jan
-    - Feb
-    - Mar
-    - Apr
-    - Maj
-    - Jun
-    - Jul
-    - Aug
-    - Sep
-    - Okt
-    - Mov
-    - Dec
-    day_names:
-    - Söndag
-    - Måndag
-    - Tisdag
-    - Onsdag
-    - Torsdag
-    - Fredag
-    - Lördag
-    formats:
-      default: "%Y-%m-%d"
-      long: "%e %B %Y"
-      short: "%e %b"
-    month_names:
-    -
-    - Januari
-    - Februari
-    - Mars
-    - April
-    - Maj
-    - Juni
-    - Juli
-    - Augusti
-    - September
-    - Oktober
-    - November
-    - December
-    order:
-    - :day
-    - :month
-    - :year
-
-  time:
-    am: ''
-    formats:
-      default: "%a, %e %b %Y %H:%M:%S %z"
-      long: "%e %B %Y %H:%M"
-      short: "%e %b %H:%M"
-    pm: ''
